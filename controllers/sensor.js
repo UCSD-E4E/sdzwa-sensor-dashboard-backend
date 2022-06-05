@@ -33,14 +33,14 @@ const getSensorById = async (req, res) => {
             description: true,
             type: true,
             source: true,
-            format: true,
+            //format: true,
             locationX: true,
             locationY: true,
             dateStr: true,
             status: true,
             installedAt: true,
             updatedAt: true,
-            url: true
+            url: true,
         },
         where: {
             id: parseInt(req.params.id)
@@ -106,7 +106,7 @@ const updateSensorById = async (req, res) => {
             description: req.body.description,
             type: req.body.type,
             source: req.body.source,
-            format: req.body.format
+            url: req.body.url
         }
     });
     
@@ -117,16 +117,18 @@ const updateSensorById = async (req, res) => {
             msg: 'Sensor NOT found'
         });
     }
-    res.json(sensors);
+    res.status(200).json({
+        msg: 'success'
+    });
 };
 
-const deleteSensorByName = async (req, res) => {
+const deleteSensorById = async (req, res) => {
     const sensorExists = await sensor.findUnique({
         where: {
-            name: req.params.name
+            id: parseInt(req.params.id)
         },
         select: {
-            name: true
+            id: true
         }
     });
 
@@ -138,11 +140,13 @@ const deleteSensorByName = async (req, res) => {
 
     const sensors = await sensor.delete({
         where: {
-            name: req.params.name
+            id: parseInt(req.params.id)
         }
     });
 
-    res.json(sensors);
+    res.status(200).json({
+        msg: 'success'
+    });
 };
 
 const createSensorByName = async (req, res) => {
@@ -156,7 +160,7 @@ const createSensorByName = async (req, res) => {
     });
     if(sensorExists) {
         return res.status(400).json({
-            msg: 'Sensor already exists'
+            msg: 'ERROR: Sensor already exists'
         });
     }
 
@@ -167,12 +171,14 @@ const createSensorByName = async (req, res) => {
             description: req.body.description,
             type: req.body.type,
             source: req.body.source,
-            format: req.body.format
+            url: req.body.url
         }
     });
 
 
-    res.json(newSensor);
+    res.status(200).json({
+        msg: 'success'
+    });
 };
 
-module.exports = {getAllSensors, getSensorById, getSensorByName, updateSensorById, deleteSensorByName, createSensorByName};
+module.exports = {getAllSensors, getSensorById, getSensorByName, updateSensorById, deleteSensorById, createSensorByName};
