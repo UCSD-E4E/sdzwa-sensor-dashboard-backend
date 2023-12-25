@@ -1,4 +1,6 @@
 # Backend Web Presence
+This repository is no longer actively maintained.
+
 ## Background
 The San Diego Zoo Wildlife Association (SDZWA) manages a vast network of multimedia sensors within the grounds of their
 Safari Park. Researchers at SDZWA deploy various sensor types across large physical distances throughout their enclosures.
